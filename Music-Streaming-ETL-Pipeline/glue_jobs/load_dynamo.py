@@ -115,3 +115,39 @@ create_table_if_not_exists(
         {"AttributeName": "genre", "AttributeType": "S"}
     ]
 )
+
+# ======= Builders =======
+
+def build_genre_kpi(row):
+    if not row.get("date") or not row.get("track_genre"):
+        return None
+    return {
+        "date": str(row["date"]),
+        "genre": row["track_genre"],
+        "listen_count": int(row.get("listen_count", 0)),
+        "unique_listeners": int(row.get("unique_listeners", 0)),
+        "total_listening_time": float(row.get("total_listening_time", 0)),
+        "avg_listen_time_per_user": float(row.get("avg_listen_time_per_user", 0))
+    }
+
+def build_top_song(row):
+    if not row.get("date") or not row.get("track_genre") or not row.get("track_name"):
+        return None
+    return {
+        "date": str(row["date"]),
+        "genre_track": f"{row['track_genre']}#{row['track_name']}",
+        "genre": row["track_genre"],
+        "track_name": row["track_name"],
+        "play_count": int(row.get("listen_count", 0)),
+        "rank": int(row.get("rank", 0))
+    }
+
+def build_top_genre(row):
+    if not row.get("date") or not row.get("track_genre"):
+        return None
+    return {
+        "date": str(row["date"]),
+        "genre": row["track_genre"],
+        "listen_count": int(row.get("listen_count", 0)),
+        "rank": int(row.get("rank", 0))
+    }
