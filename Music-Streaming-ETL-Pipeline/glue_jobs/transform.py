@@ -14,3 +14,7 @@ streams_df = spark.read.parquet("s3://music-streaming-data-02/validated/streams"
 
 # Load reference data from raw songs path
 songs_df = spark.read.option("header", True).csv("s3://music-streaming-data-02/raw/songs/songs.csv")
+
+# Preprocessing
+streams_df = streams_df.withColumn("listen_date", to_date("listen_time"))
+songs_df = songs_df.select("track_id", "track_name", "track_genre", "duration_ms")
