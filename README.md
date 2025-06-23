@@ -1,7 +1,5 @@
 # Music-Streaming-ETL-Pipeline-with-AWS-Glue-DynamoDB-MWAA
 
-# Project Documentation: Music Streaming ETL Pipeline with AWS Glue, DynamoDB, and MWAA
-
 ## Overview
 
 This project implements a fault-tolerant, compute-efficient, and memory-efficient ETL pipeline for processing music streaming data using AWS-native services. The pipeline performs validation, transformation, aggregation of KPIs, and ingestion into DynamoDB. The orchestration is done using Managed Workflows for Apache Airflow (MWAA).
