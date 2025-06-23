@@ -6,3 +6,9 @@ from airflow.utils.dates import days_ago
 from airflow.exceptions import AirflowSkipException
 import boto3
 import datetime
+
+# Constants
+S3_BUCKET = "music-streaming-data-02"
+STREAM_PREFIX = "raw/streams/"
+REGION = "us-east-1"
+DDB_TRACKING_TABLE = "ProcessedStreams"
