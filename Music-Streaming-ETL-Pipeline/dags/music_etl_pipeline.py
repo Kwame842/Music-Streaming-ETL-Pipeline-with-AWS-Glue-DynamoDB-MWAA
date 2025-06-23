@@ -137,3 +137,9 @@ with DAG(
         task_id="archive_stream_file",
         python_callable=move_to_archive
     )
+
+        # === DAG Structure ===
+    start >> wait_for_stream >> check_stream
+    check_stream >> validate_data >> branch_validation
+    branch_validation >> transform >> load_dynamo >> mark_complete >> archive_stream >> end
+    branch_validation >> handle_validation_failure >> end
