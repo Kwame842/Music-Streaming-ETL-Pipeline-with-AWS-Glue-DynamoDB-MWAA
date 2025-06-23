@@ -74,5 +74,44 @@ def load_parquet_to_dynamo(table, s3_path, item_builder):
                     batch.put_item(Item=item)
                     count += 1
             except Exception as ex:
-                logger.warning(f"⚠️ Skipped row due to error: {ex}")
+                logger.warning(f" Skipped row due to error: {ex}")
     logger.info(f" {count} items written to {table.name}")
+
+
+# ======= Table Definitions =======
+
+create_table_if_not_exists(
+    "DailyGenreKPIs",
+    key_schema=[
+        {"AttributeName": "date", "KeyType": "HASH"},
+        {"AttributeName": "genre", "KeyType": "RANGE"}
+    ],
+    attr_defs=[
+        {"AttributeName": "date", "AttributeType": "S"},
+        {"AttributeName": "genre", "AttributeType": "S"}
+    ]
+)
+
+create_table_if_not_exists(
+    "TopSongsPerGenre",
+    key_schema=[
+        {"AttributeName": "date", "KeyType": "HASH"},
+        {"AttributeName": "genre_track", "KeyType": "RANGE"}
+    ],
+    attr_defs=[
+        {"AttributeName": "date", "AttributeType": "S"},
+        {"AttributeName": "genre_track", "AttributeType": "S"}
+    ]
+)
+
+create_table_if_not_exists(
+    "TopGenresPerDay",
+    key_schema=[
+        {"AttributeName": "date", "KeyType": "HASH"},
+        {"AttributeName": "genre", "KeyType": "RANGE"}
+    ],
+    attr_defs=[
+        {"AttributeName": "date", "AttributeType": "S"},
+        {"AttributeName": "genre", "AttributeType": "S"}
+    ]
+)
