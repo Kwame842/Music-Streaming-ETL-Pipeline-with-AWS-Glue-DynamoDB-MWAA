@@ -151,3 +151,25 @@ def build_top_genre(row):
         "listen_count": int(row.get("listen_count", 0)),
         "rank": int(row.get("rank", 0))
     }
+
+# ======= Load Data =======
+
+load_parquet_to_dynamo(
+    dynamodb.Table("DailyGenreKPIs"),
+    get_latest_partition_path(f"{BASE_PREFIX}/avg_metrics/"),
+    build_genre_kpi
+)
+
+load_parquet_to_dynamo(
+    dynamodb.Table("TopSongsPerGenre"),
+    get_latest_partition_path(f"{BASE_PREFIX}/top_songs/"),
+    build_top_song
+)
+
+load_parquet_to_dynamo(
+    dynamodb.Table("TopGenresPerDay"),
+    get_latest_partition_path(f"{BASE_PREFIX}/top_genres/"),
+    build_top_genre
+)
+
+logger.info(" All data loaded to DynamoDB successfully.")
