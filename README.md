@@ -4,6 +4,9 @@
 
 This project implements a fault-tolerant, compute-efficient, and memory-efficient ETL pipeline for processing music streaming data using AWS-native services. The pipeline performs validation, transformation, aggregation of KPIs, and ingestion into DynamoDB. The orchestration is done using Managed Workflows for Apache Airflow (MWAA).
 
+## Architecture
+![Architecture Diagram](diagram/Architecture-Diagram1.jpg)
+
 ---
 
 ## Folder Structure in S3
@@ -97,6 +100,8 @@ s3://music-streaming-data-02/
   * `play_count`: Number
   * `rank`: Number
 
+![TopSongsPerGenre](screenshots/TopSongsPerGenre.png)
+
 ---
 
 ## Airflow DAG: `music_etl_pipeline.py`
@@ -117,6 +122,10 @@ s3://music-streaming-data-02/
 * `load_to_dynamodb` – Triggers DynamoDB loader.
 * `mark_as_processed` – Updates tracking table.
 * `archive_stream_file` – Moves file to `archive/`.
+
+
+## Airflow Dag
+![Airflow Dag](screenshots/Dag-Music-ETL.png)
 
 ---
 
