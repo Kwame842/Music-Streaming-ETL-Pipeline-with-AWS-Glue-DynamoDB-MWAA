@@ -7,7 +7,7 @@ This project implements a **fault-tolerant**, **compute-efficient**, and **memor
 
 ---
 
-![Architecture Diagram](diagram/Architecture-Diagram1.jpg)
+![Architecture Diagram](Music-Streaming-ETL-Pipeline/diagram/Architecture-Diagram1.jpg)
 
 ---
 
@@ -126,7 +126,7 @@ s3://music-streaming-data-02/
 - `mark_as_processed` – Logs successful processing.
 - `archive_stream_file` – Moves file to the archive location.
 
-![Airflow DAG](screenshots/Dag-Music-ETL.png)
+![Airflow DAG](Music-Streaming-ETL-Pipeline/screenshots/Dag-Music-ETL.png)
 
 ---
 
