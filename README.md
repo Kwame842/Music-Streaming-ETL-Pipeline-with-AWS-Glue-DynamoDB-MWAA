@@ -104,7 +104,7 @@ s3://music-streaming-data-02/
   - `play_count` (Number)
   - `rank` (Number)
 
-![Top Songs Per Genre Table](screenshots/TopSongsPerGenre.png)
+![Top Songs Per Genre Table](Music-Streaming-ETL-Pipeline/screenshots/TopSongsPerGenre.png)
 
 ---
 
