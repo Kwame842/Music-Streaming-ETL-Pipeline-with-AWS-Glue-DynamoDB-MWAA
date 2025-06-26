@@ -1,4 +1,3 @@
-
 # Music Streaming ETL Pipeline with AWS Glue, DynamoDB, and MWAA
 
 ## Overview
@@ -75,6 +74,7 @@ s3://music-streaming-data-02/
 - Creates DynamoDB tables if they don't already exist:
   - `DailyGenreKPIs`
   - `TopSongsPerGenre`
+  - `ProcessedStreams`
 - Uploads data using `boto3` and `batch_writer()`.
 - Handles both partitioned and non-partitioned files.
 - Skips and logs invalid rows.
@@ -108,6 +108,34 @@ s3://music-streaming-data-02/
 
 ---
 
+### `ProcessedStreams` (Tracking Table)
+
+This table ensures **idempotency** and avoids reprocessing of stream files. It tracks every successfully processed file.
+
+- **Partition key:** `filename` (String)  
+- **Attributes:**
+  - `processed_on` (String) — ISO timestamp of successful processing  
+  - `status` (String) — E.g., `"success"` or `"failed"`
+
+#### Create Table Script
+
+```python
+import boto3
+
+dynamodb = boto3.client('dynamodb')
+
+dynamodb.create_table(
+    TableName='ProcessedStreams',
+    KeySchema=[{'AttributeName': 'filename', 'KeyType': 'HASH'}],
+    AttributeDefinitions=[{'AttributeName': 'filename', 'AttributeType': 'S'}],
+    BillingMode='PAY_PER_REQUEST'
+)
+```
+
+> This table is used by MWAA's `check_if_processed` and `mark_as_processed` tasks.
+
+---
+
 ## Airflow DAG: `music_etl_pipeline.py`
 
 - Uses `S3KeySensor` to detect new stream files.
@@ -137,7 +165,7 @@ s3://music-streaming-data-02/
 Ensure your Glue and MWAA execution roles have these permissions:
 
 - `s3:GetObject`, `s3:PutObject`, `s3:ListBucket`
-- `dynamodb:PutItem`, `dynamodb:UpdateItem`, `dynamodb:DescribeTable`
+- `dynamodb:PutItem`, `dynamodb:UpdateItem`, `dynamodb:DescribeTable`, `dynamodb:CreateTable`
 - `glue:StartJobRun`, `glue:GetJobRun`
 
 ### Example Trust Policy for MWAA Role
