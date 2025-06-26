@@ -104,7 +104,7 @@ s3://music-streaming-data-02/
   - `play_count` (Number)
   - `rank` (Number)
 
-![Top Songs Per Genre Table](Music-Streaming-ETL-Pipeline/screenshots/TopSongsPerGenre.png)
+![Top Songs Per Genre Table](Music-Streaming-ETL-Pipeline/imgs/TopSongsPerGenre.png)
 
 ---
 
@@ -154,7 +154,7 @@ dynamodb.create_table(
 - `mark_as_processed` – Logs successful processing.
 - `archive_stream_file` – Moves file to the archive location.
 
-![Airflow DAG](Music-Streaming-ETL-Pipeline/screenshots/Dag-Music-ETL.png)
+![Airflow DAG](Music-Streaming-ETL-Pipeline/imgs/Dag-Music-ETL.png)
 
 ---
 
